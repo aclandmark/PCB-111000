@@ -4,6 +4,7 @@
 Purpose: To introduce newcomers to C-programming for Atmega micro-controllers using the WinAVR compiler.  Programmers, target devices and a display are all provided on the pcb.  Sample user programs are provided to illustrate various applications such as transferring data to and from a PC, reading switches and driving a display.  Finished projects such as a stop watch, reaction time tester or calculator can be operated independently of a PC provided that a 5V USB supply is available.
 
 PCB 111000 Hardware:
+
     1. An Atmega 328 that drives an 8 digit 7 segment display and downloads user code to an Atmega 168.
     
     2. An Atmega 168 for which the user writes simple C-programs.
