@@ -13,6 +13,6 @@ PCB 111000 Hardware:
 
 PCB 111000 Software:
     1. A basic Atmega programmer that resides in the boot partition of the Atmega 328.
-    2. An application that drives the display, hosts an I2C interface and includes other functions including a clock/stop watch and arithmetic (known as the mini-OS).
+    2. An application that drives the display, hosts an I2C interface and includes other functions including a clock/stop watch and              arithmetic (known as the mini-OS).
     3. An Atmega 328 programmer that can be downloaded onto the Atmega 168.
     4. Subroutine library to support user code.
