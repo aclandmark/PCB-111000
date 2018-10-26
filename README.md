@@ -10,13 +10,13 @@ PCB 111000 Hardware:
     3. Three switches that can be used to provide inputs for the Atmega 168.
     4. An FTDI 230X USB to UART bridge that enables the PCB to be connected to a PC.
     5. A programming interface:  This is normally used to program the Atmega 168 but can also be used 
-    to update the Atmega 328 code.
+       to update the Atmega 328 code.
     6. An I2C interface via which user code controls the display.
 
 PCB 111000 Software:
 
     1. A basic Atmega programmer that resides in the boot partition of the Atmega 328.
     2. An application that drives the display, hosts an I2C interface and includes other functions 
-    including a clock/stop watch and arithmetic (known as the mini-OS).
+       including a clock/stop watch and arithmetic (known as the mini-OS).
     3. An Atmega 328 programmer that can be downloaded onto the Atmega 168.
     4. Subroutine library to support user code.
