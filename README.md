@@ -5,7 +5,9 @@ Purpose: To introduce newcomers to C-programming for Atmega micro-controllers us
 
 PCB 111000 Hardware:
     1. An Atmega 328 that drives an 8 digit 7 segment display and downloads user code to an Atmega 168.
+    
     2. An Atmega 168 for which the user writes simple C-programs.
+    
     3. Three switches that can be used to provide inputs for the Atmega 168.
     4. An FTDI 230X USB to UART bridge that enables the PCB to be connected to a PC.
     5. A programming interface:  This is normally used to program the Atmega 168 but can also be used to update the Atmega 328 code.
