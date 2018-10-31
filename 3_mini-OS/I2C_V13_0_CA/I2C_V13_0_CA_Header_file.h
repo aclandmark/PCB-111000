@@ -1,6 +1,0 @@
-# include "Resources_CA/I2C_V13_0_CA.h"
-# include "Resources_CA/I2C_V13_0_CA_IO_subroutines.c"
-# include "Resources_CA/I2C_V13_0_CA_display_subroutines.c"
-# include "Resources_CA/I2C_V13_0_CA_Arithmetic_subroutines.c"
-# include "Resources_CA/I2C_V13_0_CA_ISR_subroutines.c"
-# include "Resources_CA/I2C_V13_0_CA_osccal_calibration subroutintes.c"
