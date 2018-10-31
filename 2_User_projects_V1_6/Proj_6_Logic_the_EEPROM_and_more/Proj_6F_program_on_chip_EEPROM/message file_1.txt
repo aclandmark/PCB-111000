@@ -1,0 +1,21 @@
+
+
+
+
+
+
+
+
+Hello world
+Writing text strings to a .txt file
+Writing C programs in programmers notepad
+Compiling the C-prgrams with WINAVR to produce .hex files
+Copying the .text file to the on-chip EEPROM using this program
+Reserving the first 10 EEPROM locations for variables
+Downloading the .hex-file to the flash memory
+Running the program using the text strings to provide user prompts
+The EEPROM also contains clock calibration bytes in locations 0x1F7/8
+Must terminate last string with a cr.
+ABCDERFGIJKLMN
+OPQRSTUVWXYZ
+

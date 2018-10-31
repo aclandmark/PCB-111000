@@ -1,0 +1,9 @@
+Hello world
+ABC
+DEFG
+HIJKL
+MNOP
+QRS
+TUVW
+XYZ
+Must terminate last string with a cr.
