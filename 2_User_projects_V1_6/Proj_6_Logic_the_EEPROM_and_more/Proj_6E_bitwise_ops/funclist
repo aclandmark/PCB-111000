@@ -1,0 +1,13 @@
+_get_char: CODE, 972 0 15
+_I2C_Tx_1: CODE, 1146 0 68
+_binUnwantedChars: CODE, 987 0 20
+_main: CODE, 1584 0 464
+_sendString: CODE, 1085 0 61
+_receiveChar: CODE, 956 0 5
+_Timer_1_10mS_delay_x_m: CODE, 1007 0 32
+_isCharavailable: CODE, 1039 0 46
+_waitforkeypress: CODE, 961 0 11
+_get_binary_char: CODE, 1296 0 98
+_logical_op: CODE, 1394 0 190
+_PRN_GEN_2: CODE, 1214 0 82
+Total: 1092
