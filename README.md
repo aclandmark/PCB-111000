@@ -23,3 +23,8 @@ PCB 111000 Software:
 
 
 Test_file_change
+
+Link to relevent AVRfreaks project
+
+
+https://github.com/MicrochipTech/avrfreaks-projects/tree/main/projects/pcb-111000-winavr-taster-pcb
