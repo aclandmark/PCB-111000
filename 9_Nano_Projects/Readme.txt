@@ -1,0 +1,1 @@
+PCB111000_UNO and PCB111000_CP2102 projects adapted for use on original PCB111000 pcbs and compiled using Arduino Nana configured for an Atmega168 processor.
