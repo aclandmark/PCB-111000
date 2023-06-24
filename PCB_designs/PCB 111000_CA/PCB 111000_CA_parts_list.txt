@@ -1,0 +1,46 @@
+Partlist
+
+Two versions of PCB 111000 are available
+PCB 111000_CC uses Common Cathode displays 
+PCB 111000_CA Common Anode displays
+
+PCB 2 layer board 85mm by 40mm
+
+7_SEG1&2  CA56-12SURKWA	RS872-1907 or RS146-1581  or 872_1907P	Common Anode Red display		
+
+IC1      FT230XS   	RS 757-0010 
+IC2      ATMEGA 168 	RE 73-4276                              
+IC3      ATMEGA 328    	RE 73-4281   
+L1       CHOKE		RS 724-1582                    
+
+BSS84		RS 436-8091P		TR2-9			8 OFF
+2SK3018		RS 694-2812		TR10     		1 OFF
+
+27R 		RS 679-1979		R1, R4			2 OFF
+100R 		RS 223-2120		R10			1 OFF
+220R 		RS 153-987		R19, R27, R28		3 OFF	(switch decoupling)	
+330R		RS 721-9784
+220R		RS 123-4356		R20-26			7 OFF (Segment drivers) 
+560R 		RS 679-2225		R15,16			2 OFF	(dual LED drivers)
+3K9  		RS 223-2344		R5-6, R17-18		4 OFF	
+10K  		RS 223-2394		R2-3, R8, R14		4 OFF
+22K 		RS 679-1917		R7, R9			2 OFF
+
+18pF		RS 648-0935					2 off for crystal
+47p		RS 391-028		C2, C5			2 OFF
+10n		RS 264-4141		C1, C9, C15-17		5 OFF
+100n		RS 264-4179		C3, C6			2 OFF + Extra decoupling
+4.7uF		RS 691-1224		C4			1 OFF
+1uF		RS 648-0733		Additional decoupling to IC pins
+Xtal		RS 547-6985 or 478-9268	
+
+SW1		RE 76-0100	DPDT							
+SW2		RE 51-0709	NO push button (SM)		
+SW3-5		RE51-0711	NO push button (with pins)	 
+
+SKT1		RS 515-1967	USB socket			
+
+LED1		RS228-5764 	CC_DUAL_LED (There is an error in the library. No worry!!)
+
+
+Note RS is Radio Spares and RE is Rapid Electronics
