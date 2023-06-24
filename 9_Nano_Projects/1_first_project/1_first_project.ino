@@ -24,24 +24,18 @@ A PRN generator that produces pseudo random numbers.
 #include "First_project_header.h"
 
 
-int main (void)                          //Example 8
-  { unsigned int random_num;
-  unsigned char PRN_counter;
-  long PORT_1 = 1, PORT_2 = 1;
+int main (void)                          //Example 1
+  { unsigned int PORT_1;
 
-  setup_HW_basic;
-  PRN_counter = 0;
-  random_num = PRN_16bit_GEN (0, &PRN_counter);
-  while (1)
-  { for (int m = 0; m < random_num % 3; m++)
-    { if (!(PORT_1 = ((PORT_1 * 2) % 0x10000)))
-        PORT_1 = 1;
-    }
-    if (!(PORT_2 = ((PORT_2 * 2) % 0x10000)))PORT_2 = 1;
-    I2C_Tx_2_integers(PORT_1, PORT_2);
-    Timer_T0_10mS_delay_x_m(8);
-    random_num = PRN_16bit_GEN (random_num, &PRN_counter);
-  }
+  setup_HW;
+  PORT_1 = 1;
+  for (int m = 0; m <= 15; m++)
+  {  I2C_Tx_2_integers(PORT_1, PORT_1);
+    _delay_ms(60);
+    PORT_1 = PORT_1 << 1;
+  wdr();}
+  //SW_reset;
+  return 1;
   }
 
 
