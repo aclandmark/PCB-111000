@@ -1,5 +1,5 @@
 
-#include "../../Resources_V12/Header_files/I_O_from switches.h"
+//#include "../Header_files/I_O_from switches.h"	
 
 
 void I2C_Tx_long(long);
@@ -50,7 +50,7 @@ s[4] = expnt;
 I2C_Tx(num_bytes,mode, s);}
 
 /************************************************************************/
-void I2C_Tx_float_display_control(void){
+/*void I2C_Tx_float_display_control(void){
 char PCMSK0_backup, PCMSK2_backup, float_display_mode = '0';
 PCMSK0_backup= PCMSK0;
 PCMSK2_backup= PCMSK2;
@@ -63,7 +63,7 @@ send_byte_with_Nack(float_display_mode);
 clear_I2C_interrupt;
 if(float_display_mode == '2')break;}
 PCMSK0 = PCMSK0_backup;
-PCMSK2 = PCMSK2_backup;}
+PCMSK2 = PCMSK2_backup;}*/
 
 /************************************************************************/
 long I2C_displayToNum(void){		
