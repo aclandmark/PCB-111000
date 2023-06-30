@@ -20,7 +20,7 @@ Note: Proj_9B can be used if the default value of OSCCAL is not good enough for 
 
 volatile char T1_OVF;
 volatile long error_SUM;
-char OSCCAL_WV, OSCCAL_DV, New_UC_value;
+unsigned char OSCCAL_WV, OSCCAL_DV, New_UC_value;
 volatile int EA_counter, EA_buff_ptr;
 char cal_mode;
 
