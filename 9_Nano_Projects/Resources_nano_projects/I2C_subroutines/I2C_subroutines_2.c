@@ -118,7 +118,8 @@ s[0] = Op;
 I2C_Tx(num_bytes,mode,s);
 if(s[0] == 'A')return;{
 I2C_Rx_RN(&RHSofDP, &res_exp);
-String_to_PC("\r\n0.");Num_to_PC(10,RHSofDP); Exp_to_PC(res_exp);} }
+//String_to_PC("\r\n0.");///////////////////////////////////////////////////////////////
+Num_to_PC(10,RHSofDP); Exp_to_PC(res_exp);} }
 
 
 /************************************************************************/
