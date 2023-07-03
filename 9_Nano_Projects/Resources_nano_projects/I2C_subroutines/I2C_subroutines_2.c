@@ -1,11 +1,30 @@
 
-//#include "../Header_files/I_O_from switches.h"	
+char PCMSK0_backup, PCMSK2_backup, float_display_mode;
+	
+
+#define I2C_Tx_float_display_control \
+{\
+PCMSK0_backup= PCMSK0;\
+PCMSK2_backup= PCMSK2;\
+float_display_mode = '0';\
+if (PCIenabled){disable_pci_on_sw2;disable_pci_on_sw1_and_sw3;}\
+while(1){\
+if(switch_2_down)float_display_mode = '1'; else float_display_mode = '0';\
+if((switch_1_down)||(switch_3_down))float_display_mode = '2';\
+waiting_for_I2C_master;\
+send_byte_with_Nack(float_display_mode);\
+clear_I2C_interrupt;\
+if(float_display_mode == '2')break;}\
+PCMSK0 = PCMSK0_backup;\
+PCMSK2 = PCMSK2_backup;
+
+
 
 
 void I2C_Tx_long(long);
 void I2C_Tx_real_num(long);
 void I2C_Tx_float_num(long, char);
-void I2C_Tx_float_display_control(void);
+//void I2C_Tx_float_display_control(void);
 long I2C_displayToNum(void);						//was I2C_displayToBinary
 
 void I2C_Tx_Initiate_tables(char*);
