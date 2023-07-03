@@ -121,11 +121,15 @@ TWCR |= (1 << TWEA) | (1 << TWIE);} 	//Slave mode with interrupt and Enable Ackn
 
 void I2C_Tx_display(void){
 
-int PRN;
+int PRN = 0;
 unsigned char PRN_counter = 0;
 
+if ((!(eeprom_read_byte((uint8_t*)0x1FC))) && (!(eeprom_read_byte((uint8_t*)0x1FB))))
+eeprom_write_byte((uint8_t*)(0x1FC), 0xFF);
+
+
 while(1){
-PRN = PRN_16bit_GEN (0, &PRN_counter);									//Generate a new PRN (0) tells subroutine to use the EEPROM
+PRN = PRN_16bit_GEN (PRN, &PRN_counter);									//Generate a new PRN (0) tells subroutine to use the EEPROM
 I2C_Tx_2_integers(PRN, (PRN<<1));							//Display two "pseudo random numbers"
 Timer_T1_sub(T1_delay_100ms);}}
 
