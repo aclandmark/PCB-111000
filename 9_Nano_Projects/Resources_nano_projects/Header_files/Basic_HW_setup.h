@@ -72,6 +72,7 @@ setup_watchdog;\
 set_up_I2C;\
 ADMUX |= (1 << REFS0);\
 set_up_switched_inputs;\
+Set_LED_ports;\
 Unused_I_O;\
 eeprom_write_byte((uint8_t*)(0x1FD),OSCCAL);\
 while (!(PIND & (1 << PD1)));\
@@ -90,6 +91,7 @@ setup_watchdog;\
 set_up_I2C;\
 ADMUX |= (1 << REFS0);\
 set_up_switched_inputs;\
+Set_LED_ports;\
 Unused_I_O;\
 eeprom_write_byte((uint8_t*)(0x1FD),OSCCAL);\
 while (!(PIND & (1 << PD1)));\
@@ -148,6 +150,19 @@ PORTB |= ((1 << PB2)|(1 << PB7));\
 PORTC |= ((1 << PC0)|(1 << PC1)|(1 << PC2));\
 PORTD |= ((1 << PD3)|(1 << PD4)|(1 << PD5)|(1 << PD6));
 
+
+
+#define Set_LED_ports		DDRB = (1 << DDB0) | (1 << DDB1);
+#define LEDs_on				PORTB |= (1 << PB0)|(1 << PB1);
+#define LEDs_off			PORTB &= (~((1 << PB0)|(1 << PB1)));
+#define LED_1_on			PORTB |= (1 << PB1);
+#define LED_1_off			PORTB &= (~( 1<< PB1));	
+#define LED_2_off			PORTB &= (~(1 << PB0));
+#define LED_2_on			PORTB |= (1 << PB0);
+
+#define Toggle_LED_1 \
+if (PORTB & (1 << PB1)){LED_1_off;}\
+else {PORTB |= (1 << PB1);}
 
 /*****************************************************************************/
 #define OSC_CAL \
