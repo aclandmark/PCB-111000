@@ -41,12 +41,10 @@ unsigned int PRN_16bit_GEN(unsigned int start, unsigned char *PRN_counter){				/
 unsigned int bit, lfsr, eep_address;													//The calling routine provides memory space for PRN_counter
 unsigned char eep_offset = 0;																//The subroutine provides it for every thing else
 
-//eep_offset = eeprom_read_byte((uint8_t*)(0x3EF));										//Three pairs of eeprom registers are reserved to backup PRN numbers
-//if(eep_offset > 4) eep_offset = 0;
 
 if((!(*PRN_counter)) && (!(start)))														//Only read the EEPROM the first time a program calls this subroutine
-{lfsr = (eeprom_read_byte((uint8_t*)(0x1FC - eep_offset)) << 8) + 
-eeprom_read_byte((uint8_t*)(0x1FB - eep_offset));}										//Data saved to EEPROM survives resets including POR (power on reset)
+{lfsr = (eeprom_read_byte((uint8_t*)0x1FC) << 8) + 
+eeprom_read_byte((uint8_t*)0x1FB);}										//Data saved to EEPROM survives resets including POR (power on reset)
 
 else lfsr = start;																		//Use previous PRN value to generate the next one
 
@@ -56,11 +54,10 @@ lfsr = (lfsr >> 1) | (bit << 15);
 *PRN_counter += 1;	 
 if(*PRN_counter == 255)
 
-{eeprom_write_byte((uint8_t*)(0x1FC - eep_offset),(lfsr>>8));							//Save every 16th PRN number to EEPROM
-eeprom_write_byte((uint8_t*)(0x1FB - eep_offset),lfsr);									//This prevents the display from endlessly repeating
-//Toggle_LED_1;																			//Note: Saving every one burns out the EEPROM location too quickly
-*PRN_counter = 0;
-Char_to_PC(eep_offset + '0');}
+{eeprom_write_byte((uint8_t*)0x1FC,(lfsr>>8));							//Save every 16th PRN number to EEPROM
+eeprom_write_byte((uint8_t*)0x1FB, lfsr);									//This prevents the display from endlessly repeating
+Toggle_LED_1;															//Note: Saving every one burns out the EEPROM location too quickly
+*PRN_counter = 0;}
 
 return lfsr;}
 
