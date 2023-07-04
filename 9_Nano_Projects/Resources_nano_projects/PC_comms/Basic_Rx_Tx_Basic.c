@@ -26,7 +26,7 @@ void UBtoAL(char*, unsigned long, char);
 
 
 /*********************************************************************/
-void USART_init (unsigned char UBRROH_N, unsigned char UBRR0L_N ){
+void setup_PC_comms_Basic (unsigned char UBRROH_N, unsigned char UBRR0L_N ){
 UCSR0B = 0;
 UBRR0H = UBRROH_N;  									
 UBRR0L = UBRR0L_N;  								
@@ -37,145 +37,109 @@ UCSR0C =  (1 << UCSZ00)| (1 << UCSZ01);}
 
 
 /*********************************************************************/
-void waitforchar(void){
-while (!(UCSR0A & (1 << RXC0)));}
-
-
-/*********************************************************************/
-char waitforkeypress(void){
-while (!(UCSR0A & (1 << RXC0)));
-return UDR0;}
-
-
-/*********************************************************************/
-char receiveChar(void)
-{return UDR0;}
-
-
-/*********************************************************************/
-char isCharavailable (char m){int n = 0;
-while (!(UCSR0A & (1 << RXC0))){n++;
-if (n>8000) {m--;n = 0;}if (m == 0)return 0;}
+char isCharavailable_Basic (int m){int n = 0;
+while (!(UCSR0A & (1 << RXC0)))											//Return 1 immediately that a character is received
+{n++; wdr();															//No character yet: Increment counter											
+if (n>8000) {m--;n = 0;}if (m == 0)return 0;}							//Counter overflows before a character has been received: return zero
 return 1;}
 
 
-/*********************************************************************/
-//char isCharWaiting(){
-//if(UCSR0A & (1 << RXC0)) return 1;
-//else return 0;}
-
 
 /*********************************************************************/
+char waitforkeypress_Basic (void){										//Wait here indefinitely but prevent WDTime-out
+while (!(UCSR0A & (1 << RXC0)))wdr();	
+return UDR0;}		
 
-char wait_for_return_key(void){	
+
+
+/*********************************************************************/
+char Char_from_PC_Basic(void)											//Return character detected by "isCharavailable()"
+{return UDR0;}
+
+
+
+/**********************************************************************************************************************************************************************************/
+void Char_to_PC_Basic(char data){														
+while (!(UCSR0A & (1 << UDRE0)));										//Wait for transmit buffer to be ready to accept new data
+UDR0 = data;}															//Load data register with "data" and it will immediately be transmitted
+
+
+
+/**********************************************************************************************************************************************************************************/
+void newline_Basic(void){String_to_PC_Basic ("\r\n");}
+
+
+
+/**********************************************************************************************************************************************************************************/
+void String_to_PC_Basic(const char s[]){								//Transmits a sequence (string) of characters and requires the address in program memory of the first one
+int i = 0;																//"i" gives the relative address of the next character to be transmitted
+while(i < 200){															//Transmits up to 200 characters using "Char_to_PC()" or untill the null (\0) character is detected
+if(s[i] == '\0') break;
+Char_to_PC_Basic(s[i++]);}}												//Transmit character and increment "i" so that it addresses (points to) the next one.
+
+
+
+/**********************************************************************************************************************************************************************************/
+char decimal_digit_Basic (char data){											//Returns 1 if data is a character of 0 to 9 inclusive
+if (((data > '9') || (data < '0')) )return 0;							//Otherwise return zero
+else return 1;}
+
+
+
+
+/**********************************************************************************************************************************************************************************/
+void Int_to_PC_Basic (int number)
+{ int i = 0;
+  char s[12];
+   do
+  { s[i++] = number % 10 + '0';
+  }
+  while ((number = number / 10) > 0);
+  s[i] = '\0';
+  for (int m = i; m > 0; m--)Char_to_PC_Basic(s[m - 1]);
+  Char_to_PC_Basic(' ');
+}
+
+
+
+/**********************************************************************************************************************************************************************************/
+int Int_from_PC_Basic(char digits[]){
+char keypress;
+for(int n = 0; n<=7; n++) digits[n] = 0; 
+
+do
+{keypress =  waitforkeypress_Basic();} 
+while (!(decimal_digit_Basic(keypress)));                                      //(non_decimal_char(keypress));  //Not -,0,1,2,3,4,5,6,7,8 or 9
+digits[0] = keypress;
+I2C_Tx_8_byte_array(digits);
+
+while(1){
+if ((keypress = wait_for_return_key_Basic())  =='\r')break;
+if (decimal_digit_Basic (keypress))                                           //012345678or9  :Builds up the number one keypress at a time
+{for(int n = 7; n>=1; n--)
+digits[n] = digits[n-1];                                                //Shifts display left for each keypress
+digits[0] = keypress;
+I2C_Tx_8_byte_array(digits);}}
+            
+return I2C_displayToNum();}
+
+
+
+/**********************************************************************************************************************************************************************************/
+char wait_for_return_key_Basic(void){                  						//Returns key presses one at a time
 char keypress,temp;
-keypress = waitforkeypress();
-if((keypress == '\r') || (keypress == '\n')){
-if (isCharavailable(1)){temp = receiveChar();}keypress = '\r';}
+while(1){																//Remain in while loop until a character is received
+if (isCharavailable_Basic(8)){												//Pauses but returns 1 immediately that a character is received
+keypress = Char_from_PC_Basic();												//Skip if no character has been received 
+break;}}																//Exit while loop when character has been read
+if((keypress == '\r') || (keypress == '\n')){							//Detect \r\n, \r or \n and converts to \r
+if (isCharavailable_Basic(1)){temp = Char_from_PC_Basic();}
+keypress = '\r';}
 return keypress;}
 
 
 
-/*********************************************************************/
-void binUnwantedChars_dot (void){char bin_char;
-while(1){if (isCharavailable(5)==1){bin_char = receiveChar();Char_to_PC('.');}else break;}newline();}
 
 
-/*********************************************************************/
-void binUnwantedChars (void){char bin_char;
-while(1){if (isCharavailable(5)==1)bin_char = receiveChar();else break;}}
-
-
-/*********************************************************************/
-void Char_to_PC(char data){
-while (!(UCSR0A & (1 << UDRE0)));
-UDR0 = data;}
-
-/*********************************************************************/
-void String_to_PC(const char s[]){
-int i = 0;
-while(i < 200){
-if(s[i] == '\0') break;
-Char_to_PC(s[i++]);} }
-
-/*********************************************************************/
-void newline(void){String_to_PC ("\r\n");}
-
-
-/*********************************************************************/
-void Num_to_PC(char radix, long long_num){
-char array[12];							//Long has 10 chars + sign + null terminator	
-SBtoAL(array, long_num, radix);			//calls the Binary to askii subroutine
-NumericString_to_PC(array);}				//Prints characters in reverse order
-
-/*********************************************************************/
-void SBtoAL(char array[], long num, char radix){					//Signed Binary to Askii
-int m=0;
-long sign;
-
-if (num == 0x80000000){
-switch(radix){
-case 10: array[0] = '8';array[1] = '4'; array[2] = '6';		//0x80000000 * -1 = 0
-array[3] = '3';array[4] = '8';array[5] = '4'; array[6] = '7';
-array[7] = '4';array[8] = '1';array[9] = '2';
-array[10] = '-'; array[11] = '\0'; break;
-
-case 16: array[0] = '0';array[1] = '0'; array[2] = '0';		//0x80000000 * -1 = 0
-array[3] = '0';array[4] = '0';array[5] = '0'; array[6] = '0';
-array[7] = '8';array[8] = '-';array[9] = '\0';
-array[10] = '\0'; array[11] = '\0'; break; } return;}
-
-for (int n = 0; n <=11; n++)array[n] = 0;	
-if ((sign = num) < 0) num = num * (-1);
-
-do {array[m] = num % radix;
-if(array[m] < 10)array[m] += '0'; else array[m] += '7';
-m++;} while ((num = num/radix) > 0);
-if (sign < 0) {array[m] = '-';m++;}}
-
-
-/*********************************************************************/
-void NumericString_to_PC(char* s){					
-int n=0;
-while (s[n] != '\0')n++;							//scroll to end of string counting the number of characters
-for(int m = n; m; m--)Char_to_PC(*(s + m-1));}		//print last character first
-
-
-/*********************************************************************/
-char decimal_digit (char data){
-if (((data > '9') || (data < '0')) )return 0;
-else return 1;}
-
-
-/*********************************************************************/
-char hex_digit (char data){
-switch(data){
-case '0': case '1': case '2': case '3': case '4': case '5': case '6':
-case '7': case '8': case '9': case 'A': case 'B': case 'C': case 'D':
-case 'E': case 'F': return 1; break;
-default: return 0; break;}}
-
-
-/*********************************************************************/
-void Exp_to_PC (signed char expt){
-char sign;
-if (expt < 0) {sign = '-'; String_to_PC (" E-");Num_to_PC(10,expt*(-1));}
-else {String_to_PC (" E+");Num_to_PC(10,expt);}}
-
-
-/*********************************************************************/
-void Num_to_PC_U(char radix, unsigned long long_num){
-char array[12];							//Long has 10 chars + sign + null terminator	
-UBtoAL(array, long_num, radix);			//calls the Binary to askii subroutine
-NumericString_to_PC(array);}	
-
-
-/*********************************************************************/
-void UBtoAL(char array[], unsigned long num, char radix){					//Signed Binary to Askii
-int m=0;
-for (int n = 0; n <=11; n++)array[n] = 0;	
-do {array[m] = num % radix;
-if(array[m] < 10)array[m] += '0'; else array[m] += '7';
-m++;} while ((num = num/radix) > 0);}
 
 
