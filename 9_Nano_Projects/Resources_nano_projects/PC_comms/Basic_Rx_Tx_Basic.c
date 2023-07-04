@@ -1,27 +1,10 @@
 
-void waitforchar(void);
-char waitforkeypress(void);
-char receiveChar(void);
-char isCharavailable(char);
-//char isCharWaiting(void);			//was isCharavailableNow
-char wait_for_return_key(void);
-void binUnwantedChars_dot (void);
-void binUnwantedChars (void);
-void Char_to_PC(char);
-void String_to_PC(char*);
-void newline(void);
 
-void Num_to_PC(char, long);					//was sendLongNum()
-void SBtoAL(char*, long, char);	
-void NumericString_to_PC(char*);			//was sendNumericString
 
-char decimal_digit (char);
-char hex_digit (char);
-void Exp_to_PC (signed char);
-
-void Num_to_PC_U(char, unsigned long);		//was sendLongNumU()
-void UBtoAL(char*, unsigned long, char);
-
+void String_to_PC_Basic(const char*);
+char wait_for_return_key_Basic(void);
+void I2C_Tx_8_byte_array(char*);
+long I2C_displayToNum(void);
 
 
 
