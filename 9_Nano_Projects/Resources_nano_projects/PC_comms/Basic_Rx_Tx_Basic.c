@@ -24,6 +24,18 @@ void UBtoAL(char*, unsigned long, char);
 
 
 
+
+/*********************************************************************/
+void USART_init (unsigned char UBRROH_N, unsigned char UBRR0L_N ){
+UCSR0B = 0;
+UBRR0H = UBRROH_N;  									
+UBRR0L = UBRR0L_N;  								
+UCSR0A = (1 << U2X0);
+UCSR0B = (1 << RXEN0) | (1<< TXEN0);
+UCSR0C =  (1 << UCSZ00)| (1 << UCSZ01);}
+
+
+
 /*********************************************************************/
 void waitforchar(void){
 while (!(UCSR0A & (1 << RXC0)));}
