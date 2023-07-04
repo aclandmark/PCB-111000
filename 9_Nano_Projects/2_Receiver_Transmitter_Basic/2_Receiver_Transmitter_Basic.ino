@@ -18,21 +18,23 @@ digits 1, 2 and 5 can therfore by extracted by subtracting 48 from 49, 50 and 53
 
 
 #include "Receiver_Transmitter_header.h"
- 
-int main (void)                          //Example 6
-  { int i = 0, number = 12345;
-  char s[12];
-  setup_HW_basic;
-  do {
-    s[i++] = number % 10 + '0';
-  }
-  while ((number = number / 10) > 0);
-  s[i] = '\0';
-  for (int m = i; m > 0; m--)
-    Char_to_PC_Basic(s[m - 1]);
+
+int main (void)                          //Example 4
+  { setup_HW_basic;
+  String_to_PC_Basic("\r\nDefining and using text strings\r\n");
+  const char *message_1 = "Hello world\r\n";
+  const char *message_2 = "Sending text to a PC\r\n";
+  const char message_3[] = "Writing C programs and\r\n";
+  const char message_4[] = "Uploading them to a device\r\n";
+  String_to_PC_Basic(message_1);
+  String_to_PC_Basic(message_2);
+  String_to_PC_Basic(message_3);
+  String_to_PC_Basic(message_4);
   while (1)wdr();
   return 1;
-  }  
+  }
+
+  
 
 
 /************************************************************************************************************
@@ -61,7 +63,7 @@ int main (void)                          //Example 6
   int main (void)                          //Example 2
   { char symbol;
   setup_HW_basic;
-  newline;
+  newline_Basic();
   symbol = '!';
   while (symbol <= '~')
   { Char_to_PC_Local(symbol);
@@ -82,7 +84,7 @@ int main (void)                          //Example 3
   { setup_HW_basic;
   while (!(isCharavailable_Basic(65)))
     Char_to_PC_Basic('?');
-  newline;
+  newline_Basic();
   Char_to_PC_Basic(Char_from_PC_Basic());
   while (1)
   { if (isCharavailable_Basic(10))
@@ -122,7 +124,7 @@ int main (void)                          //Example 5
   setup_HW_basic;
   newline();
   while (symbol <= '~')
-  { Num_to_PC_Basic(symbol);
+  { Num_to_PC_Local(symbol);
     Char_to_PC_Local(symbol++);
     wdr();_delay_ms(50);
     if (!((symbol - '!') % 8))newline();
@@ -166,7 +168,7 @@ int main (void)                          //Example 7
   { num = num * 10 + keypress  - '0';
     I2C_Tx_long(num);
   }
-  Num_to_PC_Basic(num * 2);
+  Num_to_PC_Local(num * 2);
     I2C_Tx_long(num * 2);
   SW_reset;
   return 1;
@@ -225,11 +227,11 @@ int main (void)                          //Example 9
   case 2: no_decimal_places = Num; break;}}
 
   divide(A, B, &Div, &mod, no_decimal_places);
-  Num_to_PC_Basic(Div);
+  Num_to_PC_Local(Div);
   String_to_PC_Basic(". ");
     while (no_decimal_places) {
   no_decimal_places =    divide(mod*10, B, &Div, &mod, no_decimal_places);
-  Num_to_PC_Basic(Div);}
+  Num_to_PC_Local(Div);}
   String_to_PC_Basic("\r\n");
    SW_reset;
   return 1; }
@@ -245,7 +247,7 @@ int main (void)                          //Example 9
 ************This area is for project subroutines*************************************************************/
 void Num_string_from_KBD_Basic(char * array_ptr)
 { char keypress;
-  while ((keypress = waitforkeypress()) != '\r')
+  while ((keypress = waitforkeypress_Basic()) != '\r')
   { *array_ptr = keypress;
     array_ptr += 1;
   }
@@ -288,7 +290,7 @@ void Char_to_PC_Local(char data)
 
 
 /********************************************************************************************************/
-void Num_to_PC_Basic (long number)
+void Num_to_PC_Local (long number)
 { int i = 0;
   char s[12];
   
@@ -297,8 +299,8 @@ void Num_to_PC_Basic (long number)
   }
   while ((number = number / 10) > 0);
   s[i] = '\0';
-  for (int m = i; m > 0; m--)Char_to_PC(s[m - 1]);
-  Char_to_PC(' ');
+  for (int m = i; m > 0; m--)Char_to_PC_Basic(s[m - 1]);
+  Char_to_PC_Basic(' ');
 }
 
 
