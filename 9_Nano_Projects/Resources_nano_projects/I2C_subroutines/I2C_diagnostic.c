@@ -1,13 +1,5 @@
 
 
-void I2C_Rx_get_version(char);
-void check328cal (void);
-void I2C_TX_328_check(void);
-void PCB_test(void);
-void scan_328_cal_factors(void);
-//void Cal_at_POR(void);
-void shred_328_cal(void);
-
 /************************************************************************/
 void I2C_Rx_get_version(char str_type){
 char num_bytes=1; char mode='P';
@@ -19,14 +11,14 @@ waiting_for_I2C_master;
 num_bytes = (receive_byte_with_Ack() - '0') * 10;
 num_bytes += (receive_byte_with_Ack() - '0');
 for (int m = 0; m < num_bytes; m++){
-if (m ==(num_bytes-1)){Char_to_PC(receive_byte_with_Nack());}
-else {Char_to_PC(receive_byte_with_Ack());}}
+if (m ==(num_bytes-1)){Char_to_PC_Basic(receive_byte_with_Nack());}
+else {Char_to_PC_Basic(receive_byte_with_Ack());}}
 TWCR = (1 << TWINT);}
 
 
 
 /************************************************************************/
-void check328cal (void){									//MODE NOW DISCONTINUED
+/*void check328cal (void){									//MODE NOW DISCONTINUED
 
 char  OSCCAL_WV;  
 //char cal_mode=0;										
@@ -39,15 +31,15 @@ OSCCAL_WV = receive_byte_with_Ack();					//I2C_slave_receive();
 cal_error = receive_byte_with_Ack();					//I2C_slave_receive(); 	
 cal_error = (cal_error << 8) + receive_byte_with_Nack();//I2C_slave_receive();
 clear_I2C_interrupt;
-String_to_PC("\r\nATMEGA 328");
-String_to_PC("    Cal factor ");Num_to_PC(16, OSCCAL_WV);Char_to_PC('\t');
-String_to_PC("error ");Num_to_PC(10, cal_error);
+String_to_PC_Basic("\r\nATMEGA 328");
+String_to_PC_Basic("    Cal factor ");Num_to_PC_Basic(16, OSCCAL_WV);Char_to_PC_Basic('\t');
+String_to_PC_Basic("error ");Num_to_PC_Basic(10, cal_error);
 
 
-String_to_PC ("\r\nQuick cal? y or AOK\r\n");
+String_to_PC_Basic ("\r\nQuick cal? y or AOK\r\n");
 if(waitforkeypress() == 'y'){
 
-String_to_PC ("Temp cal factor ");
+String_to_PC_Basic ("Temp cal factor ");
 
 I2C_Tx_initiate_mode('Z');
 waiting_for_I2C_master;										//Confirm User Cal has been correctly saved to EEPROM
@@ -57,11 +49,11 @@ cal_error = receive_byte_with_Ack();						//I2C_slave_receive();
 cal_error = (cal_error << 8) + receive_byte_with_Nack();	//I2C_slave_receive();
 clear_I2C_interrupt;
 
-Num_to_PC(16, New_UC_value);Char_to_PC('\t');
-String_to_PC ("error  "); Num_to_PC(10, cal_error); 
+Num_to_PC_Basic(16, New_UC_value);Char_to_PC_Basic('\t');
+String_to_PC_Basic ("error  "); Num_to_PC_Basic(10, cal_error); 
 newline();
 }}
-
+*/
 
 
 
