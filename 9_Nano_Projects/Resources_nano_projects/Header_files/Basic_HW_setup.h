@@ -15,9 +15,6 @@ int test;
 char watch_dog_reset = 0;
 char User_response;
 
-//void Read_Hello_world_string(void);
-//unsigned int PRN_16bit_GEN(unsigned int);
-
 #define T0_delay_5ms 5,220
 #define T0_delay_4ms 4,227
 #define T0_delay_10ms 5,178
@@ -25,10 +22,6 @@ char User_response;
 
 
 #define T1_delay_250ms 5,0xF85F
-
-
-
-
 
 #define T1_delay_10ms 3, 0xF63C
 #define T1_delay_20ms 3, 0xEC79
@@ -67,25 +60,6 @@ char User_response;
 
 
 /*****************************************************************************/
-#define setup_HW \
-setup_watchdog;\
-set_up_I2C;\
-ADMUX |= (1 << REFS0);\
-set_up_switched_inputs;\
-Set_LED_ports;\
-Unused_I_O;\
-eeprom_write_byte((uint8_t*)(0x1FD),OSCCAL);\
-while (!(PIND & (1 << PD1)));\
-Timer_T0_sub(T0_delay_5ms);\
-OSC_CAL;\
-setup_PC_comms_Basic(0,16);\
-\
-Timer_T0_10mS_delay_x_m(1);\
-I2C_Tx_LED_dimmer();\
-diagnostic_mode;
-
-
-
 #define setup_HW_basic \
 setup_watchdog;\
 set_up_I2C;\
@@ -99,7 +73,12 @@ Timer_T0_10mS_delay_x_m(5);\
 OSC_CAL;\
 setup_PC_comms_Basic(0,16);
 
-
+#define setup_HW \
+setup_HW_basic;\
+\
+Timer_T0_10mS_delay_x_m(1);\
+I2C_Tx_LED_dimmer();\
+diagnostic_mode;
 
 
 /*****************************************************************************/
@@ -203,11 +182,6 @@ break;\
 case '4':I2C_Tx_display(); break;}}\
 else TWCR = (1 << TWINT);
 
-
-/*****************************************************************************/
-//#define User_cal
-//if(MCUSR & (1 << PORF)
-//{if((PIND & 0x80)^0x80)Cal_at_POR();}
 
 
 
