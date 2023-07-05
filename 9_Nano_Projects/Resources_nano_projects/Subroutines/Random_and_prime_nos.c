@@ -22,21 +22,6 @@ return lfsr;}
 
 
 /*****************************************************************/
-
-/*unsigned int PRN_16bit_GEN(unsigned int start){
-unsigned int bit, lfsr;
-
-if(!(start)) lfsr = (eeprom_read_byte((uint8_t*)(0x1FC)) << 8) + eeprom_read_byte((uint8_t*)(0x1FB));
-else lfsr = start;
-bit = (( lfsr >> 0) ^ (lfsr >> 2) ^ (lfsr >> 3) ^ (lfsr >> 5)) & 1;
-lfsr = (lfsr >> 1) | (bit << 15);
-if(!(start)){
-eeprom_write_byte((uint8_t*)(0x1FC),(lfsr>>8));
-eeprom_write_byte((uint8_t*)(0x1FB),lfsr);}
-
-return lfsr;}*/
-
-
 unsigned int PRN_16bit_GEN(unsigned int start, unsigned char *PRN_counter){				//Pseudo random number generation 
 unsigned int bit, lfsr, eep_address;													//The calling routine provides memory space for PRN_counter
 unsigned char eep_offset = 0;																//The subroutine provides it for every thing else
