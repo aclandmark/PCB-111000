@@ -1,10 +1,14 @@
 
-
-
 void String_to_PC_Basic(const char*);
 char wait_for_return_key_Basic(void);
 void I2C_Tx_8_byte_array(char*);
 long I2C_displayToNum(void);
+
+void send_byte_with_Ack(char);
+void send_byte_with_Nack(char);
+char receive_byte_with_Ack(void);
+char receive_byte_with_Nack(void);
+void I2C_Tx_initiate_mode(char);
 
 
 
@@ -122,6 +126,17 @@ return keypress;}
 
 
 
+/**********************************************************************************************************************************************************************************/
+void Read_Hello_world_string(void){
+char receive_byte;
+
+I2C_Tx_initiate_mode('H');
+waiting_for_I2C_master;									//Initiate comuninations:master to send string
+do{receive_byte = receive_byte_with_Ack();				//print out string as characters are received
+if(receive_byte)Char_to_PC_Basic(receive_byte);}
+while(receive_byte);									//Detect '\0' character used to terminate a string
+receive_byte_with_Nack();								//Receve a second null char at the end of the string
+clear_I2C_interrupt;}									//Complete transaction
 
 
 
