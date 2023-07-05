@@ -186,19 +186,19 @@ I2C_TX_328_check();\
 waiting_for_I2C_master;\
 if (receive_byte_with_Nack()==1)\
 {TWCR = (1 << TWINT);\
-String_to_PC("\r\nPress\r\n\
+String_to_PC_Basic("\r\nPress\r\n\
 1 for OS version\r\n\
 2 for system data\r\n\
 3 Message from the OS (x to escape)\r\n\
 4 Default project\r\n\
 0 to escape\r\n");\
-switch (waitforkeypress()){\
+switch (waitforkeypress_Basic()){\
 case '0':break;\
 case '1':I2C_Rx_get_version('0');break;\
 case '2':I2C_Rx_get_version('1');break;\
 case '3':do\
-{Read_Hello_world_string();newline();}\
-while (waitforkeypress() != 'x');\
+{Read_Hello_world_string();newline_Basic();}\
+while (waitforkeypress_Basic() != 'x');\
 break;\
 case '4':I2C_Tx_display(); break;}}\
 else TWCR = (1 << TWINT);
