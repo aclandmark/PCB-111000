@@ -18,7 +18,7 @@ void nop_delay(int nop_counter){for(int q = 0; q<= nop_counter; q++) {asm("nop")
 
 /*********************************************************************/
 void Timer_T0_10mS_delay_x_m(int m)
-{for (int n = 0; n < m; n++){Timer_T0_sub(T0_delay_10ms);}}
+{for (int n = 0; n < m; n++){Timer_T0_sub(T0_delay_10ms);wdr();}}
 
 /*********************************************************************/
 void Timer_T0_sub(char Counter_speed, unsigned char Start_point){ 
