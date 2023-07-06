@@ -2,7 +2,7 @@
 #include "First_project_header.h"
 //#include "First_project_header_2.h"
 
-int main (void)                          //Example 1
+ int main (void)                          //Example 1
   { unsigned int PORT_1;
 
   setup_HW;
@@ -207,7 +207,10 @@ int main (void)                          //Example 8
   unsigned char PRN_counter;
 
   setup_HW;
+  wdt_enable(WDTO_30MS);
   I2C_Tx_any_segment_clear_all();
+  while(switch_3_down)wdr();
+
 
   PRN_counter = 0;
   PRN = PRN_16bit_GEN (0, &PRN_counter);
@@ -229,11 +232,11 @@ int main (void)                          //Example 8
       backup_the_display(letter, digit_num);
       seg_counter += 1;
       Timer_T0_10mS_delay_x_m(8);
+       while(switch_3_down);
     }
     direction ^= 1;
     seg_counter = 0;
-    //_delay_ms(500);
-    for(int m = 0; m <= 9; m++){_delay_ms(50);wdr();}
+    Timer_T0_10mS_delay_x_m(50);
   }
   SW_reset;
   return 1;
