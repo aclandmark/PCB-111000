@@ -45,7 +45,7 @@ TCNT1H = (Start_point >> 8);
 TCNT1L = Start_point & 0x00FF;
 TIFR1 = 0xFF;
 TCCR1B = Counter_speed;
-while(!(TIFR1 & (1<<TOV1)));
+while(!(TIFR1 & (1<<TOV1)))wdr();
 TIFR1 |= (1<<TOV1); 
 TCCR1B = 0;}
 
