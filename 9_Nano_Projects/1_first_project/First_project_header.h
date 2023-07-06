@@ -10,7 +10,7 @@ char watch_dog_reset = 0;
 
 
 /*****************************************************************************/
-#define setup_HW_basic \
+#define setup_HW \
 setup_watchdog;\
 set_up_I2C;\
 ADMUX |= (1 << REFS0);\
@@ -27,8 +27,8 @@ I2C_Tx_LED_dimmer();
 
 
 /*****************************************************************************/
-#define setup_HW_Full \
-setup_HW_basic;\
+#define setup_HW_Extra \
+setup_HW;\
 \
 Timer_T0_10mS_delay_x_m(1);\
 I2C_TX_328_check();\
