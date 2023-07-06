@@ -65,7 +65,7 @@ for (int m = 14; m; m--)
  int main (void)                          //Example 3
   { unsigned int PORT_1, PORT_2;
 
-  setup_HW_basic;
+  setup_HW;
   while (1)
   { PORT_1 = 0b0000000000000001;      //1
     PORT_2 = 0b1000000000000000;     //0x8000;
@@ -85,7 +85,7 @@ for (int m = 14; m; m--)
   int main (void)                          //Example 4
   { unsigned long PORT_1, PORT_2;
 
-  setup_HW_basic;
+  setup_HW;
   while (1)
   { PORT_1 = 1;
     PORT_2 = 0x80000000;
@@ -104,7 +104,7 @@ for (int m = 14; m; m--)
  int main (void)                          //Example 5
   { unsigned int PORT_1, PORT_2;
 
- setup_HW_basic;
+ setup_HW;
   while (1)
   { PORT_1 = 1;
     PORT_2 = 0x8000;
@@ -128,7 +128,7 @@ for (int m = 14; m; m--)
  int main (void)                          //Example 6
   { unsigned int PORT_1, PORT_2, m = 0, n = 0;
 
-  setup_HW_basic;
+  setup_HW;
   PORT_1 = 1;
   PORT_2 = 0x8000;
   while (1)
@@ -176,7 +176,7 @@ int main (void)                          //Example 8
   unsigned char PRN_counter;
   long PORT_1 = 1, PORT_2 = 1;
 
-  setup_HW_basic;
+  setup_HW;
   PRN_counter = 0;
   random_num = PRN_16bit_GEN (0, &PRN_counter);
   while (1)
@@ -205,7 +205,7 @@ int main (void)                          //Example 8
   unsigned int PRN;
   unsigned char PRN_counter;
 
-  setup_HW_basic;
+  setup_HW;
   I2C_Tx_any_segment_clear_all();
 
   PRN_counter = 0;
@@ -250,7 +250,8 @@ int main (void)                          //Example 10
 { unsigned int PRN;
   unsigned char PRN_counter;
 
-  setup_HW_basic;
+  setup_HW;
+  wdt_enable(WDTO_30MS);
   PRN_counter = 0;
   PRN = PRN_16bit_GEN (0, &PRN_counter);
   while (1)
