@@ -2,26 +2,18 @@
 #include "First_project_header.h"
 //#include "First_project_header_2.h"
 
-int main (void)                          //Example 2
-  { unsigned int PORT_1, m = 0, n = 0;
-  char direction = 0;
+int main (void)                          //Example 1
+  { unsigned int PORT_1;
 
-  setup_HW_basic;
-  wdt_enable(WDTO_30MS);
-  PORT_1 = 1;
-  while (1)
-  { if (direction == 0){I2C_Tx_2_integers(PORT_1 << m, PORT_1 << m);
+  setup_HW;
+    PORT_1 = 1;
+  for (int m = 0; m <= 15; m++)
+  {  I2C_Tx_2_integers(PORT_1, PORT_1);
     Timer_T0_10mS_delay_x_m(12);
-    m = m + 1;}
-    if(m == 16){m = 15;direction = 1;}
-    if (direction == 1){I2C_Tx_2_integers(PORT_1 << m-1, PORT_1 << m-1);
-    Timer_T0_10mS_delay_x_m(12);
-    m = m - 1;
-    if (m== 0)direction = 0;}
+   PORT_1 = PORT_1 << 1;
    }
-  }
-
-
+  SW_reset;
+    }
 
 
 
@@ -35,37 +27,36 @@ int main (void)                          //Example 2
 int main (void)                          //Example 1
   { unsigned int PORT_1;
 
-  setup_HW_Full;
-  wdt_enable(WDTO_30MS);
-  PORT_1 = 1;
+  setup_HW;
+    PORT_1 = 1;
   for (int m = 0; m <= 15; m++)
   {  I2C_Tx_2_integers(PORT_1, PORT_1);
     Timer_T0_10mS_delay_x_m(12);
    PORT_1 = PORT_1 << 1;
    }
-  while(1);
+  SW_reset;
     }
   
 
 
 ***************Example 2: One bar sweep right to left and back to right again*********************
 int main (void)                          //Example 2
-  { unsigned int PORT_1, m = 0, n = 0;
+  { unsigned int PORT_1;
 
-  setup_HW_basic;
+  setup_HW;
   wdt_enable(WDTO_30MS);
   PORT_1 = 1;
-  while (1)
-  { I2C_Tx_2_integers(PORT_1 << m, PORT_1 << m);
-    _delay_ms(60);
-    if (!(n))m += 1;
-    if (m == 16)n = 1;
-    if (n == 1)m -= 1;
-    if (m == 0)n = 0;
-  //wdr();
+  for (int m = 0; m <= 15; m++)
+  {  I2C_Tx_2_integers(PORT_1 << m, PORT_1 << m);
+    Timer_T0_10mS_delay_x_m(12);
+   }
+for (int m = 14; m; m--)
+{  I2C_Tx_2_integers(PORT_1 << m, PORT_1 << m);
+    Timer_T0_10mS_delay_x_m(12);
+   }
+  while(1);
   }
-  return 1;
-  }  
+  
 
 
 
@@ -160,12 +151,11 @@ int main (void)                          //Example 7
   char m = 1;
   char overflow = 0;
 
-  setup_HW_basic;
+  setup_HW;
   while (1)
   { I2C_Tx_2_integers(PORT_1, ~PORT_1);
     
-    _delay_ms(40);wdr();
-    _delay_ms(40);wdr();
+    _delay_ms(80);
     
     if (m <= 5)
     {
