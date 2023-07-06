@@ -49,7 +49,8 @@ case '3':do\
 {Read_Hello_world_string();newline_Basic();}\
 while (waitforkeypress_Basic() != 'x');\
 break;\
-case '4':I2C_Tx_display(); break;}}\
+case '4':wdt_enable(WDTO_30MS);\
+I2C_Tx_display(); break;}}\
 else TWCR = (1 << TWINT);
 
 
