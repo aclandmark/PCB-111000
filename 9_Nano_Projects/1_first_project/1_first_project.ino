@@ -177,6 +177,7 @@ int main (void)                          //Example 8
   long PORT_1 = 1, PORT_2 = 1;
 
   setup_HW;
+  wdt_enable(WDTO_30MS);
   PRN_counter = 0;
   random_num = PRN_16bit_GEN (0, &PRN_counter);
   while (1)
