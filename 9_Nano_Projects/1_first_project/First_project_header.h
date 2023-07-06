@@ -7,7 +7,7 @@ char watch_dog_reset = 0;
 #define T0_delay_10ms 5,178
 #define T1_delay_100ms 3, 0x9E62
 
-
+#define switch_3_down  ((PIND & 0x04)^0x04)
 
 /*****************************************************************************/
 #define setup_HW \
