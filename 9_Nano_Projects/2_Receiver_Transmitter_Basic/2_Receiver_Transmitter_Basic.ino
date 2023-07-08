@@ -19,18 +19,14 @@ digits 1, 2 and 5 can therfore by extracted by subtracting 48 from 49, 50 and 53
 
 #include "Receiver_Transmitter_header.h"
 
-int main (void)                          //Example 4
-  { setup_HW_basic;
-  String_to_PC_Basic("\r\nDefining and using text strings\r\n");
-  const char *message_1 = "Hello world\r\n";
-  const char *message_2 = "Sending text to a PC\r\n";
-  const char message_3[] = "Writing C programs and\r\n";
-  const char message_4[] = "Uploading them to a device\r\n";
-  String_to_PC_Basic(message_1);
-  String_to_PC_Basic(message_2);
-  String_to_PC_Basic(message_3);
-  String_to_PC_Basic(message_4);
-  while (1)wdr();
+int main (void)                          //Example 1
+  { setup_HW;
+  Char_to_PC_Basic('?');
+  newline_Basic();
+  while (1)
+  { Char_to_PC_Local
+    (waitforkeypress_Basic());
+  }
   return 1;
   }
 
@@ -46,12 +42,12 @@ int main (void)                          //Example 4
 
 ********Example 1: Echoes keypresses*************************************************************************
   int main (void)                          //Example 1
-  { setup_HW_basic;
-  Char_to_PC('?');
-  newline;
+  { setup_HW;
+  Char_to_PC_Basic('?');
+  newline_Basic();
   while (1)
   { Char_to_PC_Local
-    (waitforkeypress());
+    (waitforkeypress_Basic());
   }
   return 1;
   }
@@ -62,7 +58,7 @@ int main (void)                          //Example 4
 **********Example 2: Prints out ASKII characters**************************************************************
   int main (void)                          //Example 2
   { char symbol;
-  setup_HW_basic;
+  setup_HW;
   newline_Basic();
   symbol = '!';
   while (symbol <= '~')
@@ -81,7 +77,7 @@ int main (void)                          //Example 4
 
 ********Example 3: Echo character string or prints file*******************************************************
 int main (void)                          //Example 3
-  { setup_HW_basic;
+  { setup_HW;
   while (!(isCharavailable_Basic(65)))
     Char_to_PC_Basic('?');
   newline_Basic();
@@ -101,7 +97,10 @@ int main (void)                          //Example 3
 
 ********Example 4: Send strings to the PC********************************************************************
 int main (void)                          //Example 4
-  { setup_HW_basic;
+  { setup_HW;
+  wdt_enable(WDTO_120MS);
+  while(switch_3_down)wdr();
+  
   String_to_PC_Basic("\r\nDefining and using text strings\r\n");
   const char *message_1 = "Hello world\r\n";
   const char *message_2 = "Sending text to a PC\r\n";
@@ -111,7 +110,8 @@ int main (void)                          //Example 4
   String_to_PC_Basic(message_2);
   String_to_PC_Basic(message_3);
   String_to_PC_Basic(message_4);
-  while (1)wdr();
+  while(switch_3_up)wdr();
+  while(switch_3_down);
   return 1;
   }  
 
@@ -121,17 +121,20 @@ int main (void)                          //Example 4
 ************Example 5: Generate an ASKII table****************************************************************
 int main (void)                          //Example 5
   { char symbol = '!';
-  setup_HW_basic;
-  newline();
+  setup_HW;
+  wdt_enable(WDTO_120MS);
+  while(switch_3_down)wdr();
+  
+  newline_Basic();
   while (symbol <= '~')
   { Num_to_PC_Local(symbol);
     Char_to_PC_Local(symbol++);
     wdr();_delay_ms(50);
-    if (!((symbol - '!') % 8))newline();
+    if (!((symbol - '!') % 8))newline_Basic();
     else Char_to_PC_Local('\t');
   }
-  while (1)wdr();
-  return 1;
+  while(switch_3_up)wdr();
+  while(switch_3_down);
   }
   
 
@@ -143,7 +146,10 @@ int main (void)                          //Example 5
  int main (void)                          //Example 6
   { int i = 0, number = 12345;
   char s[12];
-  setup_HW_basic;
+  setup_HW;
+  wdt_enable(WDTO_120MS);
+  while(switch_3_down)wdr();
+  
   do {
     s[i++] = number % 10 + '0';
   }
@@ -151,7 +157,10 @@ int main (void)                          //Example 5
   s[i] = '\0';
   for (int m = i; m > 0; m--)
     Char_to_PC_Basic(s[m - 1]);
-  while (1)wdr();
+ 
+ newline_Basic();
+ while(switch_3_up)wdr();
+  while(switch_3_down);
   return 1;
   } 
 
@@ -162,7 +171,7 @@ int main (void)                          //Example 5
 int main (void)                          //Example 7
   { long num = 0;
   char keypress;
-  setup_HW_basic;
+  setup_HW;
   num = 0; Char_to_PC_Basic('?');
   while ((keypress = waitforkeypress_Basic()) != '\r')
   { num = num * 10 + keypress  - '0';
@@ -170,6 +179,8 @@ int main (void)                          //Example 7
   }
   Num_to_PC_Local(num * 2);
     I2C_Tx_long(num * 2);
+    while(switch_3_up);
+    newline_Basic();
   SW_reset;
   return 1;
   }  
@@ -182,8 +193,8 @@ int main (void)                          //Example 8
   char numLength;
   char Num_string[12];
   
-  setup_HW_basic;
-  String_to_PC_Basic("\r\n?\r\n");
+  setup_HW;
+  String_to_PC_Basic("?");
   Num_string_from_KBD_Basic(Num_string);
 
   { int m = 0; while (Num_string[m])
@@ -201,7 +212,8 @@ int main (void)                          //Example 8
     Char_to_PC_Basic(Num_string[m - 1]);
 
   I2C_Tx_long(num);
-
+while(switch_3_up);
+    newline_Basic();
   SW_reset;
   return 1;
 }
@@ -215,7 +227,7 @@ int main (void)                          //Example 9
   long Num, A = 55; long B = 7; long Div; long mod;
   int no_decimal_places;
 
-    setup_HW_basic;
+    setup_HW;
   String_to_PC_Basic("?\r\n");
   
   for(int m = 0; m <=2; m++)
