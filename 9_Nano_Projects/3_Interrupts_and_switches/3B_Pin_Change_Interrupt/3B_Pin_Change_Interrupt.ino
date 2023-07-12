@@ -8,9 +8,6 @@
  A Pin Change Interrupt (PCI) is generated.
  */
 
-#define set_up_PCI_on_sw2         PCICR |= (1 << PCIE2);
-#define enable_pci_on_sw2         PCMSK2 |= (1 << PCINT23);
-
 
 #include "Pin_Change_Interrupt_header.h"
 
@@ -21,7 +18,7 @@ volatile unsigned int mask;                             //Records which leds hav
 
 
 int main (void)
-{ setup_HW_basic;
+{ setup_HW;
   _delay_ms(10);
   sei();
   set_up_PCI_on_sw2;
@@ -50,7 +47,7 @@ int main (void)
 }
 
 
-ISR(PCINT2_vect)
+ISR(PCINT0_vect)
 { if (switch_2_up)return;                             //No action when switch is released
   if (switch_control) return;                         //Switch disabled: No action required
   if (mask & PORT_1)                                  //Led shot down                                 
