@@ -29,12 +29,15 @@ int j = 0;
 int array_size = 200;
 unsigned int array[200], mask;  
                                                                                                                                     
- setup_HW_basic;
+ setup_HW;
+ wdt_enable(WDTO_120MS);
+  while((switch_1_down) || (switch_3_down))wdr();
  _delay_ms(10);
  sei();
  
-set_up_PCI_on_sw1_and_sw2
-enable_pci_on_sw2;
+set_up_PCI;
+enable_pci;
+
 
 counter = 10;
 
@@ -62,7 +65,9 @@ mask = 0;
 {mask |= (1 << m); m -= 1;}}
 array[j] = (~array[j]) & ~mask;
 pause_pci_on_sw2;
-_delay_ms(100);
+//////_delay_ms(100);
+Timer_T0_10mS_delay_x_m(10);
+
 I2C_Tx_2_integers(array[j],reverse (array[j]));
 resume_PCI_on_sw2;
 }j++;} 
@@ -122,13 +127,13 @@ return num_reversed;}
 
 
 /***************************************************************************************************************************/
-ISR(PCINT2_vect)
+ISR(PCINT0_vect)
 { if (switch_2_up)return;
   counter = 10;                                   //Print out 10 more
 }
 
 
-
+ISR(PCINT2_vect){while((switch_1_down) || (switch_3_down));}
 
 
 
