@@ -11,12 +11,21 @@ char watch_dog_reset = 0;
 
 #define T0_delay_10ms 5,178
 #define T1_delay_100ms 3, 0x9E62
+#define T1_delay_1sec 5,0xE17D
 #define T2_delay_10ms 7,178
 
 
-#define set_up_PCI      PCICR |= ((1 << PCIE0) | (1 << PCIE2))
-#define enable_pci      PCMSK0 |= (1 << PCINT6);    PCMSK2 |= (1 << PCINT18) | (1 << PCINT23);
+#define set_up_PCI                PCICR |= ((1 << PCIE0) | (1 << PCIE2));
+//#define enable_pci                PCMSK0 |= (1 << PCINT6);    PCMSK2 |= (1 << PCINT18) | (1 << PCINT23);
+#define enable_pci_on_sw3    PCMSK2 |= (1 << PCINT18);
+#define enable_pci_on_sw1    PCMSK2 |= (1 << PCINT23);
+#define disable_pci_on_sw3  PCMSK2 &= (~(1 << PCINT18));
+#define disable_pci_on_sw1  PCMSK2 &= (~(1 << PCINT23));
 
+#define set_up_PCI_on_sw2        PCICR |= (1 << PCIE0);
+#define enable_pci_on_sw2        PCMSK0 |= (1 << PCINT6);
+#define pause_pci_on_sw2         PCICR &= (~(1 << PCIE0));
+#define resume_PCI_on_sw2        PCICR |= (1 << PCIE0);
 
 #define switch_1_down  ((PIND & 0x80)^0x80)
 #define switch_1_up   (PIND & 0x80)
@@ -150,6 +159,25 @@ TWDR;
 
 #define clear_I2C_interrupt \
 TWCR = (1 << TWINT);
+
+
+#define line_control {if(line_counter==4) {line_counter = 0;newline_Basic();}\
+ else {Char_to_PC_Basic('\t');line_counter++;}}
+
+#define User_instructions \
+String_to_PC_Basic(message_1);\
+String_to_PC_Basic(message_2);
+
+#define message_1 \
+"\r\nUses a modified prime number generator that includes an percentage of non_prime numbers\r\n\
+Review the numbers and try to guess the non-prime ones\r\n"
+#define message_2 \
+"Type them in terminating each with a -return- keypress\r\n\
+Do not try 1\r\n\
+Enter zero to exit and press sw3 when requested\r\n"
+
+
+
 
 
 
