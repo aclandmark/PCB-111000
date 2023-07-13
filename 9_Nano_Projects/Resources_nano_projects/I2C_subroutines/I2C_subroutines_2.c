@@ -96,7 +96,7 @@ PCMSK2 = PCMSK2_backup;}*/
 /************************************************************************/
 long I2C_displayToNum(void){		
 long L_number = 0;
-char receive_byte;
+unsigned char receive_byte;
 char num_bytes=0;
 char mode = 'I';
 
