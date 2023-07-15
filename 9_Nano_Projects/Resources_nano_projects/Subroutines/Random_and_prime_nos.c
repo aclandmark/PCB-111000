@@ -1,5 +1,5 @@
 
-char PRN_8bit_GEN(void);
+unsigned char PRN_8bit_GEN(void);
 unsigned int PRN_16bit_GEN(unsigned int, unsigned char*);
 void prime_no_generator(int,int, int*);
 void prime_no_generator_plus(int,int,  int*);
@@ -10,9 +10,9 @@ int Prime_search (int, int);
 
 
 /*****************************************************************/
-char PRN_8bit_GEN(void){
+unsigned char PRN_8bit_GEN(void){
 unsigned int bit;
-char lfsr;
+unsigned char lfsr;
 
 lfsr = eeprom_read_byte((uint8_t*)(0x1FC));
 bit = (( lfsr >> 0) ^ (lfsr >> 2) ^ (lfsr >> 3) ^ (lfsr >> 4)) & 1;
