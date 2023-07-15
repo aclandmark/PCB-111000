@@ -14,26 +14,25 @@ Therefore these functions enable us to control and interrogate these components.
 int main (void) {
   char op_code;
   char digits[8];
-  unsigned char X;
-  char keypress;
+    char keypress;
   unsigned char lfsr;
 
 int test = 0;
   char PRN_counter = 0;
 
 
- setup_HW_basic;
+ setup_HW;
 for(int m = 0; m <=7; m++)digits[m] = 0;
  
  
  sei();
 
   
-lfsr = (PRN_8bit_GEN (0, &PRN_counter));                  //Generate a new PRN (0) tells subroutine to use the EEPROM
+lfsr = (PRN_8bit_GEN ());                  //Generate a new PRN (0) tells subroutine to use the EEPROM
 
 
   String_to_PC_Basic
-  ("\r\n\r\nSelect mode 1 to 6? Then AK to continue or xx to exit (when allowed)\r\n");
+  ("\r\n\r\nSelect mode 1 to 6? Then AK to continue or x to exit (when allowed)\r\n");
 
   while (1)
   { String_to_PC_Basic("Mode?\t");
@@ -53,14 +52,14 @@ lfsr = (PRN_8bit_GEN (0, &PRN_counter));                  //Generate a new PRN (
 
     digits[1] = 0;
     digits[2] = 0;
-    X = 0;
+    //X = 0;
     do
     { if (digits[1] == 0)
       {  digits[0] = lfsr;
         digits[2] = digits[0];
        
         I2C_Tx_BWops(digits);
-        lfsr = PRN_8bit_GEN (lfsr, &PRN_counter);      
+        lfsr = PRN_8bit_GEN ();      
       }
 
       digits[2] = logical_op(digits[1], digits[0], op_code);
@@ -76,7 +75,7 @@ lfsr = (PRN_8bit_GEN (0, &PRN_counter));                  //Generate a new PRN (
       else digits[1] = (((byte)digits[1] << 1) % 256);
       }
 
-    PRN_8bit_GEN (lfsr, &PRN_counter);                          //Increment PRN_counter
+    //PRN_8bit_GEN (lfsr, &PRN_counter);                          //Increment PRN_counter
     
     } while (keypress != 'x');
 
