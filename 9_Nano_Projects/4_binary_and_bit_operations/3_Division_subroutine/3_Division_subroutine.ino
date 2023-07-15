@@ -12,7 +12,7 @@ int main (void){
 long Num_1, Num_2;
 char digits[8];
 
- setup_HW_basic;
+ setup_HW;
  _delay_ms(10);
  sei();
    
