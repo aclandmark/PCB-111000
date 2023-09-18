@@ -1,11 +1,15 @@
 # PCB-111000
 
 This project is now obsolete.
+
 The new version is PCB-111000_V2
 
 The winAVR compiler has been replaced by Arduino and Studio 7
+
 MOSFETS used to drive the display have been dispensed with
+
 The pcb is set up usng a UNO and two sketches both of which are based on the sketch "UNO_as_an_AVR_programer"
+
 Sample user programs have been updated in the light of the change from winAVR to Arduino.
 
 
