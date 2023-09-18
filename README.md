@@ -1,4 +1,15 @@
 # PCB-111000
+
+This project is now obsolete.
+The new version is PCB-111000_V2
+
+The winAVR compiler has been replaced by Arduino and Studio 7
+MOSFETS used to drive the display have been dispensed with
+The pcb is set up usng a UNO and two sketches both of which are based on the sketch "UNO_as_an_AVR_programer"
+Sample user programs have been updated in the light of the change from winAVR to Arduino.
+
+
+
 56 Projects for the novice C programmer -   Excludes programmer firm ware
 
 Purpose: To introduce newcomers to C-programming for Atmega micro-controllers using the WinAVR compiler.  Programmers, target devices and a display are all provided on the pcb.  Sample user programs are provided to illustrate various applications such as transferring data to and from a PC, reading switches and driving a display.  Finished projects such as a stop watch, reaction time tester or calculator can be operated independently of a PC provided that a 5V USB supply is available.
