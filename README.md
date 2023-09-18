@@ -2,9 +2,7 @@
 
 *******************************************************************************
 
-This project is now obsolete.
-
-The new version is PCB-111000_V2
+This project is now obsolete.    The new version is PCB-111000_V2
 
 The winAVR compiler has been replaced by Arduino and Studio 7
 
