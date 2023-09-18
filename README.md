@@ -12,6 +12,8 @@ The pcb is set up usng a UNO and two sketches both of which are based on the ske
 
 Sample user programs have been updated in the light of the change from winAVR to Arduino.
 
+The Nano_projects directory contains projects developed for PCB-111000_V2
+
 */*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
 
 
